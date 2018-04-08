@@ -81,132 +81,136 @@
     newframe.origin.x += delta ;
     self.frame = newframe;
 }
-/**
- *  适配方法
- *
- *  @param tag=100000，是适配线条，当前线条高度始终为1，当前方法最多适配四层，如需更多请自行添加
- */
-- (void)fitForiphone:(int)i
+
+CGRect  NewCustomRectMake(CGFloat left,CGFloat top,CGFloat width,CGFloat height) //适配6、6plus
 {
-    self.frame = CustomRectMake(self.left, self.top, self.width, self.height);
-    if (i==1) {
-        for (UIView *myView  in self.subviews) {
-            if (myView.tag != 100000 ) {
-                myView.frame = CustomRectMake(myView.left, myView.top, myView.width, myView.height);
-            }else if (myView.tag == 100000) {
-                myView.frame = CustomRectMake(myView.left, myView.top, myView.width, 1);
-            }
-            
+    CGRect newRect = CGRectZero;
+    newRect.origin.x = left*kscaleX;
+    newRect.origin.y = top*kscaleX;
+    newRect.size.width = width*kscaleX;
+    newRect.size.height = height*kscaleX;
+    return newRect;
+}
+
+- (void)adaptiveFor5:(UIView *)view {
+    if ([view isEqual:self]) {
+        self.frame = RectMake(self.left, self.top, self.width, self.height);
+    }
+    for (UIView *subView in [view subviews]) {
+        //        if (!self.subviews.count) {
+        //            return;
+        //        }
+        if (subView.tag != 100000 ) {
+            subView.frame = RectMake(subView.left, subView.top, subView.width, subView.height);
+        }else if (subView.tag == 100000) {
+            subView.frame = RectMake(subView.left, subView.top, subView.width, kPX1);
+            subView.backgroundColor = [UIColor cujcolorWithHexString:@"#eaeaea"];
         }
-    }
-    
-    
-    if (i==2) {
-        for (UIView *myView  in self.subviews) {
-            if (myView.tag != 100000 ) {
-                myView.frame = CustomRectMake(myView.left, myView.top, myView.width, myView.height);
-                for (UIView *twoSubView in myView.subviews) {
-                    if (twoSubView.tag == 100000) {
-                        twoSubView.frame = CustomRectMake(twoSubView.left, twoSubView.top, twoSubView.width, 1);
-                    }else {
-                        twoSubView.frame = CustomRectMake(twoSubView.left, twoSubView.top, twoSubView.width, twoSubView.height);
-                    }
-                }
-            }else if (myView.tag == 100000) {
-                myView.frame = CustomRectMake(myView.left, myView.top, myView.width, 1);
-            }
-        }
-    }
-    
-    
-    
-    if (i==3)
-    {
-        for (UIView *myView  in self.subviews) {
-            if (myView.tag != 100000 ) {
-                
-                myView.frame = CustomRectMake(myView.left, myView.top, myView.width, myView.height);
-                
-                for (UIView *twoSubView in myView.subviews) {
-                    if (twoSubView.tag != 100000 ) {
-                        twoSubView.frame = CustomRectMake(twoSubView.left, twoSubView.top, twoSubView.width, twoSubView.height);
-                        for (UIView *threeView in twoSubView.subviews) {
-                            if (threeView.tag != 100000 ) {
-                                threeView.frame = CustomRectMake(threeView.left, threeView.top, threeView.width, threeView.height);
-                            }else if (threeView.tag == 100000) {
-                                threeView.frame = CustomRectMake(threeView.left, threeView.top, threeView.width, 1);
-                            }
-                        }
-                    }else if (twoSubView.tag == 100000) {
-                        twoSubView.frame = CustomRectMake(twoSubView.left, twoSubView.top, twoSubView.width, 1);
-                    }
-                }
-            }else if (myView.tag == 100000) {
-                myView.frame = CustomRectMake(myView.left, myView.top, myView.width, 1);
-            }
-        }
-    }
-    
-    if (i==4) {
-        for (UIView *myView  in self.subviews) {
-            if (myView.tag != 100000 ) {
-                
-                myView.frame = CustomRectMake(myView.left, myView.top, myView.width, myView.height);
-                
-                for (UIView *twoSubView in myView.subviews) {
-                    if (twoSubView.tag != 100000) {
-                        twoSubView.frame = CustomRectMake(twoSubView.left, twoSubView.top, twoSubView.width, twoSubView.height);
-                        for (UIView *threeView in twoSubView.subviews) {
-                            if (threeView.tag != 100000) {
-                                threeView.frame = CustomRectMake(threeView.left, threeView.top, threeView.width, threeView.height);
-                                for (UIView *fourView  in threeView.subviews) {
-                                    if (fourView.tag != 100000) {
-                                        fourView.frame = CustomRectMake(fourView.left, fourView.top, fourView.width, fourView.height);
-                                    }else if (fourView.tag == 100000) {
-                                        fourView.frame = CustomRectMake(fourView.left, fourView.top, fourView.width, 1);
-                                    }
-                                }
-                            }else if (threeView.tag == 100000) {
-                                threeView.frame = CustomRectMake(threeView.left, threeView.top, threeView.width, 1);
-                            }
-                        }
-                    }else if (twoSubView.tag == 100000) {
-                        twoSubView.frame = CustomRectMake(twoSubView.left, twoSubView.top, twoSubView.width, 1);
-                    }
-                }
-            }else if (myView.tag == 100000) {
-                myView.frame = CustomRectMake(myView.left, myView.top, myView.width, 1);
-            }
-        }
-    }
-    
-    if (i==101) {
-        // Array 里的第一个 对象
-        UIView *myView = [self.subviews objectAtIndex:0];
-        myView.frame = CustomRectMake(myView.left, myView.top, myView.width, myView.height);
-    }
-    
-    if (i==102) {
-        // Array 里的第2个 对象
-        UIView *myView = [self.subviews objectAtIndex:1];
-        myView.frame = CustomRectMake(myView.left, myView.top, myView.width, myView.height);
-    }
-    
-    if (i==103) {
-        // Array 里的最后一个 对象
-        UIView *myView = [self.subviews lastObject];
-        myView.frame = CustomRectMake(myView.left, myView.top, myView.width, myView.height);
+        [self adaptive:subView];
     }
     
 }
 
-CGRect  CustomRectMake(CGFloat left,CGFloat top,CGFloat width,CGFloat height) //适配6、6plus
+- (void)adaptive:(UIView *)view {
+    if ([view isEqual:self]) {
+        self.frame = NewCustomRectMake(self.left, self.top, self.width, self.height);
+    }
+    for (UIView *subView in [view subviews]) {
+        //        if (!self.subviews.count) {
+        //            return;
+        //        }
+        if (subView.tag != 100000 ) {
+            subView.frame = NewCustomRectMake(subView.left, subView.top, subView.width, subView.height);
+        }else if (subView.tag == 100000) {
+            subView.frame = NewCustomRectMake(subView.left, subView.top, subView.width, kPX1);
+            subView.backgroundColor = [UIColor cujcolorWithHexString:@"#eaeaea"];
+        }
+        [self adaptive:subView];
+    }
+}
+
+CGRect  RectMake(CGFloat left,CGFloat top,CGFloat width,CGFloat height) //适配6、6plus
 {
     CGRect newRect = CGRectZero;
-    newRect.origin.x = left*scaleX;
-    newRect.origin.y = top*scaleY;
-    newRect.size.width = width*scaleX;
-    newRect.size.height = height*scaleY;
+    newRect.origin.x = left*for5X;
+    newRect.origin.y = top*for5X;
+    newRect.size.width = width*for5X;
+    newRect.size.height = height*for5X;
     return newRect;
 }
+
++ (UIView *)creatView:(CGRect)frame color:(UIColor *)color View:(UIView *)fatherView{
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    view.backgroundColor = color;
+    [fatherView addSubview:view];
+    return view;
+}
+
+- (void)drawLine:(CGRect)frame color:(UIColor *)color {
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(ctx);
+    //设置线宽
+    CGContextSetLineWidth(ctx, 0);
+    //设置填充颜色和画笔颜色
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
+    CGContextSetStrokeColorWithColor(ctx, color.CGColor);
+    //找到各个角点
+    CGPoint p_0_0 = CGPointMake(5, 2);
+    CGPoint p_0_1 = CGPointMake(frame.size.width, 2);
+    CGPoint p_1_0 = CGPointMake(0, frame.size.height - 2);
+    CGPoint p_1_1 = CGPointMake(frame.size.width - 5, frame.size.height - 2);
+    
+    CGContextMoveToPoint(ctx, p_1_0.x , p_1_0.y - 2 * 2);
+    CGContextAddArcToPoint(ctx, p_0_0.x, p_0_0.y, p_0_0.x + 2*2, p_0_0.y, 2);
+    CGContextAddArcToPoint(ctx, p_0_1.x, p_0_1.y, p_0_1.x, p_0_1.y  + 2*2, 2);
+    CGContextAddArcToPoint(ctx, p_1_1.x, p_1_1.y, p_1_1.x - 2*2, p_1_1.y, 2);
+    CGContextAddArcToPoint(ctx, p_1_0.x, p_1_0.y, p_1_0.x, p_1_0.y - 2*2, 2);
+    
+    CGContextClosePath(ctx);
+    CGContextDrawPath(ctx, kCGPathFillStroke);
+}
+
+- (void)drawCircleRect:(CGRect)rect  color:(UIColor *)color {
+    // 画圆
+    // 1.获取上下文
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextSetLineWidth(ctx, 4);
+    // 2.画圆
+    CGContextAddEllipseInRect(ctx, rect);
+    
+    [color set];
+    
+    // 3.渲染
+    CGContextStrokePath(ctx);
+}
+
++ (UIWindow *)getLastWindow
+{
+    NSArray *windows = [UIApplication sharedApplication].windows;
+    for(UIWindow *window in [windows reverseObjectEnumerator]) {
+        
+        if ([window isKindOfClass:[UIWindow class]] &&
+            CGRectEqualToRect(window.bounds, [UIScreen mainScreen].bounds))
+            
+            return window;
+    }
+    
+    return [UIApplication sharedApplication].keyWindow;
+}
+
+//当前视图
+- (UIViewController *)viewGetCurrentViewController {
+    UIViewController *vc;
+    for (UIView *view in self.subviews) {
+        for (UIView *next = view; next; next = next.superview) {
+            UIResponder* nextResponder = [next nextResponder];
+            if ([nextResponder isKindOfClass:[objc_getClass("UIViewController") class]] ) {
+                vc=(UIViewController*)nextResponder;
+                return vc;
+            }
+        }
+    }
+    return vc;
+}
+
 @end
